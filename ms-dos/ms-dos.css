@@ -1,0 +1,740 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital@0;1&display=swap');
+
+:root {
+    --width: 720px;
+    --font-main: 'Space Mono', monospace;
+    --font-secondary: 'Space Mono', monospace;
+    --font-scale: .9em;
+    --background-color: #000084;
+    --heading-color: #000000;
+    --heading-background: #00AAAA;
+    --text-color: #B7B7B7;
+    --link-color: #B7B7B7;
+    --visited-color: #B7B7B7;
+    --code-background-color: #0C0C0C;
+    --code-color: #00AAAA;
+    --code-accent-color: #AAAAAA;
+    --code-glow: rgba(0, 170, 170, 0.3);
+    --blockquote-color: #B7B7B7;
+    --glow-color: rgba(183, 183, 183, 0.4);
+    --cursor-color: #B7B7B7;
+}
+
+/* ============================================
+   LOADING SCREEN - "UNLOCKING SYSTEM..."
+   Pure CSS - No HTML required!
+   ============================================ */
+body::after {
+    content: 'LOADING BYTES...█';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        /* Progress bar (animated via background-position) */
+        linear-gradient(90deg,
+            #00AAAA 0%,
+            #00AAAA var(--loader-progress, 0%),
+            transparent var(--loader-progress, 0%)) no-repeat center 55%,
+        /* Progress bar border */
+        linear-gradient(#000000, #000000) no-repeat center 55%,
+        /* Full black background */
+        #000000;
+    background-size:
+        300px 20px,
+        304px 24px,
+        100% 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 60px;
+    z-index: 9999;
+    font-family: 'Space Mono', monospace;
+    font-size: 1.2em;
+    color: #00AAAA;
+    text-shadow: 0 0 10px rgba(0, 170, 170, 0.8);
+    animation:
+        loader-text-blink 0.5s step-end infinite,
+        loader-progress-anim 1s ease-out forwards,
+        loader-fadeout 0.4s ease-out 1.2s forwards;
+    pointer-events: all;
+}
+
+/* Progress bar border effect using box-shadow on html::after */
+html::after {
+    content: '';
+    position: fixed;
+    top: calc(55% - 12px);
+    left: calc(50% - 152px);
+    width: 304px;
+    height: 24px;
+    border: 2px solid #00AAAA;
+    box-shadow: 0 0 15px rgba(0, 170, 170, 0.4), inset 0 0 10px rgba(0, 170, 170, 0.2);
+    z-index: 10000;
+    animation: loader-fadeout 0.4s ease-out 1.2s forwards;
+    pointer-events: none;
+}
+
+@keyframes loader-text-blink {
+
+    0%,
+    50% {
+        opacity: 1;
+    }
+
+    51%,
+    100% {
+        opacity: 0.85;
+    }
+}
+
+@keyframes loader-progress-anim {
+    0% {
+        --loader-progress: 0%;
+        background-size: 0px 20px, 304px 24px, 100% 100%;
+    }
+
+    100% {
+        --loader-progress: 100%;
+        background-size: 300px 20px, 304px 24px, 100% 100%;
+    }
+}
+
+@keyframes loader-fadeout {
+    0% {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    100% {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+    }
+}
+
+@keyframes text-flicker {
+    0% {
+        opacity: 0.95;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+/* ============================================
+   BLINKING DOS CURSOR
+   ============================================ */
+@keyframes dos-blink {
+
+    0%,
+    50% {
+        opacity: 1;
+    }
+
+    51%,
+    100% {
+        opacity: 0;
+    }
+}
+
+/* Cursor after headings */
+h1::after,
+h2::after,
+h3::after {
+    content: '█';
+    color: var(--heading-color);
+    animation: dos-blink 1s step-end infinite;
+    margin-left: 2px;
+    font-weight: normal;
+}
+
+/* Cursor for paragraphs on hover */
+p:hover::after {
+    content: '▌';
+    color: var(--cursor-color);
+    animation: dos-blink 0.8s step-end infinite;
+    margin-left: 2px;
+}
+
+/* Input cursor simulation */
+input:focus::after,
+textarea:focus::after {
+    content: '█';
+    animation: dos-blink 0.6s step-end infinite;
+}
+
+/* ============================================
+   CRT SCANLINE EFFECT
+   ============================================ */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1000;
+    background: repeating-linear-gradient(0deg,
+            rgba(0, 0, 0, 0.15) 0px,
+            rgba(0, 0, 0, 0.15) 1px,
+            transparent 1px,
+            transparent 2px);
+    animation: scanline-move 8s linear infinite;
+}
+
+@keyframes scanline-move {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 0 100px;
+    }
+}
+
+/* ============================================
+   PHOSPHOR GLOW EFFECTS
+   ============================================ */
+body {
+    text-shadow: 0 0 2px var(--glow-color);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    text-shadow: 0 0 5px rgba(0, 170, 170, 0.5);
+}
+
+a {
+    text-shadow: 0 0 3px var(--glow-color);
+    transition: text-shadow 0.2s ease, background-color 0.1s ease;
+}
+
+a:hover {
+    text-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
+}
+
+/* ============================================
+   SUBTLE SCREEN FLICKER
+   ============================================ */
+@keyframes screen-flicker {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    92% {
+        opacity: 1;
+    }
+
+    93% {
+        opacity: 0.95;
+    }
+
+    94% {
+        opacity: 1;
+    }
+
+    97% {
+        opacity: 0.98;
+    }
+
+    98% {
+        opacity: 1;
+    }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    animation: screen-flicker 5s infinite, text-flicker 0.1s infinite alternate;
+}
+
+img {
+    position: relative;
+    z-index: 1001;
+    /* Lifts images above the CRT scanline overlay (z-index: 1000) */
+    transform-origin: top center;
+    /* Anchors zoom to the top edge — image only grows downward, never into text above */
+    transition:
+        transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        box-shadow 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        filter 0.35s ease;
+    cursor: zoom-in;
+    display: block;
+}
+
+img:hover {
+    transform: scale(1.05);
+    box-shadow:
+        0 0 0 2px rgba(0, 170, 170, 0.3),
+        0 8px 25px rgba(0, 0, 0, 0.6),
+        0 0 40px rgba(0, 170, 170, 0.25);
+    filter: brightness(1.08);
+    z-index: 1002;
+}
+
+/* ============================================
+   BOOT TEXT TYPING EFFECT (for title)
+   ============================================ */
+.title h1 {
+    overflow: hidden;
+    white-space: nowrap;
+    animation: typing 0.8s steps(20) 1.5s both;
+}
+
+@keyframes typing {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100%;
+    }
+}
+
+/* ============================================
+   RETRO BUTTON EFFECTS
+   ============================================ */
+button,
+input[type="submit"],
+input[type="button"] {
+    font-family: 'Space Mono', monospace;
+    background: #B7B7B7;
+    color: #000000;
+    border: 2px solid #FFFFFF;
+    border-right-color: #555555;
+    border-bottom-color: #555555;
+    padding: 5px 15px;
+    cursor: pointer;
+    text-shadow: none;
+    transition: all 0.05s;
+}
+
+button:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover {
+    background: #CCCCCC;
+}
+
+button:active,
+input[type="submit"]:active,
+input[type="button"]:active {
+    border: 2px solid #555555;
+    border-right-color: #FFFFFF;
+    border-bottom-color: #FFFFFF;
+    transform: translate(1px, 1px);
+}
+
+/* ============================================
+   LINK UNDERLINE ANIMATION
+   ============================================ */
+a {
+    position: relative;
+    text-decoration: none;
+}
+
+a::before {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--link-color);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+}
+
+a:hover::before {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+/* ============================================
+   SELECTION STYLING
+   ============================================ */
+::selection {
+    background: var(--heading-background);
+    color: var(--heading-color);
+    text-shadow: none;
+}
+
+::-moz-selection {
+    background: var(--heading-background);
+    color: var(--heading-color);
+    text-shadow: none;
+}
+
+body {
+    font-family: var(--font-secondary);
+    font-size: var(--font-scale);
+    margin: auto;
+    padding: 20px 0px;
+    max-width: var(--width);
+    text-align: left;
+    background-color: var(--background-color);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: var(--text-color);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-main);
+    color: var(--heading-color);
+    padding: 0.4em 0.6em;
+    background: var(--heading-background);
+    font-size: 1em;
+    font-weight: 500;
+}
+
+h1 {
+    font-size: 1.2em;
+}
+
+h2 {
+    font-size: 1.1em;
+}
+
+h3 {
+    font-size: 1em;
+}
+
+h4 {
+    font-size: .9em;
+}
+
+h5 {
+    font-size: .8em;
+}
+
+h6 {
+    font-size: .7em;
+}
+
+a {
+    color: var(--link-color);
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+a:hover {
+    color: #000000 !important;
+    background-color: var(--link-color);
+    text-decoration: underline;
+}
+
+nav {
+    background: #000000;
+}
+
+nav p {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+nav a {
+    color: #B7B7B7;
+    margin-right: 0px;
+    padding: 5px 12px;
+    display: inline-block;
+}
+
+nav a:hover {
+
+    background: #B7B7B7;
+}
+
+button {
+    margin: 0;
+    cursor: pointer;
+}
+
+main {
+    border: 1px solid var(--text-color);
+    padding: 20px;
+    margin: 25px 0px;
+    line-height: 1.6;
+}
+
+table {
+    width: 100%;
+}
+
+hr {
+    border: 0;
+    border-top: 1px dashed;
+}
+
+img {
+    max-width: 100%;
+    /* Note: hover/zoom/z-index rules are defined above near the flicker section */
+}
+
+code {
+    font-family: 'Space Mono', monospace;
+    padding: 2px 6px;
+    background-color: var(--code-background-color);
+    color: var(--code-color);
+    border-radius: 0px;
+    border: 1px solid #333;
+    text-shadow: 0 0 5px var(--code-glow);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+blockquote {
+    border-left: 1px solid #999;
+    color: var(--blockquote-color);
+    padding-left: 20px;
+    font-style: italic;
+}
+
+footer {
+    text-align: center;
+    color: var(--heading-color);
+    padding: 0.4em 0.6em !important;
+    background: var(--heading-background);
+}
+
+.title:hover {
+    text-decoration: none;
+}
+
+.title {
+    text-decoration: none;
+}
+
+.title h1 {
+    font-size: 1.5em;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.inline {
+    width: auto !important;
+}
+
+.highlight,
+.code {
+    padding: 15px 20px;
+    background-color: var(--code-background-color);
+    color: var(--code-color);
+    border-radius: 0px;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    overflow-x: auto;
+    /* DOS terminal double-border effect */
+    border: 2px solid #444;
+    border-top-color: #666;
+    border-left-color: #666;
+    border-right-color: #222;
+    border-bottom-color: #222;
+    /* Inner glow for CRT phosphor effect */
+    box-shadow:
+        inset 0 0 30px rgba(0, 170, 170, 0.1),
+        inset 0 0 5px rgba(0, 0, 0, 0.8),
+        0 0 10px rgba(0, 0, 0, 0.5);
+    /* Phosphor text glow */
+    text-shadow: 0 0 5px var(--code-glow);
+    position: relative;
+}
+
+/* Add DOS prompt decoration */
+.highlight::before,
+.code::before {
+    content: 'C:\\>';
+    display: block;
+    color: var(--code-accent-color);
+    font-size: 0.85em;
+    margin-bottom: 10px;
+    opacity: 0.6;
+    text-shadow: 0 0 3px rgba(170, 170, 170, 0.3);
+}
+
+/* Code block pre element styling */
+.highlight pre,
+.code pre {
+    margin: 0;
+    color: var(--code-color);
+    text-shadow: 0 0 5px var(--code-glow);
+}
+
+/* ============================================
+   SYNTAX HIGHLIGHTING OVERRIDES
+   DOS-themed contrasting colors
+   ============================================ */
+
+/* Function names - Bright Yellow for maximum visibility */
+.highlight .hljs-title,
+.highlight .hljs-function .hljs-title,
+.highlight .token.function,
+.highlight .nf,
+.highlight .n,
+.code .hljs-title,
+.code .hljs-function .hljs-title,
+.code .token.function,
+.code .nf,
+.code .n {
+    color: #FFD700 !important;
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.4);
+}
+
+/* Keywords (def, class, if, return, etc.) - White */
+.highlight .hljs-keyword,
+.highlight .token.keyword,
+.highlight .k,
+.highlight .kn,
+.highlight .kd,
+.code .hljs-keyword,
+.code .token.keyword,
+.code .k,
+.code .kn,
+.code .kd {
+    color: #FFFFFF !important;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+}
+
+/* Strings - Classic DOS Green */
+.highlight .hljs-string,
+.highlight .token.string,
+.highlight .s,
+.highlight .s1,
+.highlight .s2,
+.code .hljs-string,
+.code .token.string,
+.code .s,
+.code .s1,
+.code .s2 {
+    color: #55FF55 !important;
+    text-shadow: 0 0 5px rgba(85, 255, 85, 0.3);
+}
+
+/* Comments - Subtle Gray */
+.highlight .hljs-comment,
+.highlight .token.comment,
+.highlight .c,
+.highlight .c1,
+.highlight .cm,
+.code .hljs-comment,
+.code .token.comment,
+.code .c,
+.code .c1,
+.code .cm {
+    color: #888888 !important;
+    font-style: italic;
+    text-shadow: none;
+}
+
+/* Numbers - Magenta/Pink */
+.highlight .hljs-number,
+.highlight .token.number,
+.highlight .mi,
+.highlight .mf,
+.code .hljs-number,
+.code .token.number,
+.code .mi,
+.code .mf {
+    color: #FF55FF !important;
+    text-shadow: 0 0 5px rgba(255, 85, 255, 0.3);
+}
+
+/* Built-in functions and types - Orange */
+.highlight .hljs-built_in,
+.highlight .token.builtin,
+.highlight .nb,
+.highlight .bp,
+.code .hljs-built_in,
+.code .token.builtin,
+.code .nb,
+.code .bp {
+    color: #FFAA55 !important;
+    text-shadow: 0 0 5px rgba(255, 170, 85, 0.3);
+}
+
+/* Operators and punctuation - Cyan (default code color) */
+.highlight .hljs-operator,
+.highlight .token.operator,
+.highlight .o,
+.highlight .p,
+.code .hljs-operator,
+.code .token.operator,
+.code .o,
+.code .p {
+    color: var(--code-color) !important;
+}
+
+/* Variables and parameters - Light Cyan */
+.highlight .hljs-params,
+.highlight .hljs-variable,
+.highlight .token.parameter,
+.code .hljs-params,
+.code .hljs-variable,
+.code .token.parameter {
+    color: #88DDFF !important;
+    text-shadow: 0 0 5px rgba(136, 221, 255, 0.3);
+}
+
+/* Class names - Bright Yellow (same as functions) */
+.highlight .hljs-class .hljs-title,
+.highlight .token.class-name,
+.highlight .nc,
+.code .hljs-class .hljs-title,
+.code .token.class-name,
+.code .nc {
+    color: #FFD700 !important;
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.4);
+}
+
+/* Decorators - Light Purple */
+.highlight .hljs-decorator,
+.highlight .token.decorator,
+.highlight .nd,
+.code .hljs-decorator,
+.code .token.decorator,
+.code .nd {
+    color: #CC99FF !important;
+    text-shadow: 0 0 5px rgba(204, 153, 255, 0.3);
+}
+
+/* blog post list */
+ul.blog-posts {
+    list-style-type: none;
+    padding: unset;
+}
+
+ul.blog-posts li {
+    display: flex;
+    margin-bottom: 12px;
+}
+
+ul.blog-posts li span {
+    flex: 0 0 130px;
+}
+
+ul.blog-posts li a:visited {
+    color: var(--visited-color);
+}
+
+th {
+    border-bottom: 1px solid #ffffff;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}

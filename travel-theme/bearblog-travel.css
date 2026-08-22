@@ -1,0 +1,978 @@
+/**
+ * Theme Name: Bearblog Travel
+ * Description: A minimal, elegant travel-themed Bearblog theme
+ * Inspired by: bearblog-twentytwentytwo
+ * Aesthetic: warm sand & ocean tones, refined typography, wanderlust motif
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;1,7..72,400&display=swap');
+
+/* ========================================
+   Config / Theme Colors
+   ======================================== */
+:root {
+    /* Core Colors — Sand, sea & sky */
+    --color-primary: #2a5e6c;
+    /* Deep teal — headings, links */
+    --color-accent: #c08552;
+    /* Warm amber — dates, highlights */
+    --color-header-bg: #1e3d44;
+    /* Dark oceanic teal header */
+    --color-header-text: #f0ebe3;
+    /* Parchment white */
+    --color-background: #faf6f0;
+    /* Warm linen */
+    --color-foreground: #2d2d2d;
+    /* Near-black body text */
+    --color-muted: #7a7a7a;
+    /* Muted grey */
+    --color-border: rgba(0, 0, 0, 0.08);
+    /* Whisper-thin borders */
+
+    /* Typography */
+    --font-heading: 'Playfair Display', Georgia, 'Times New Roman', serif;
+    --font-body: 'Literata', Georgia, 'Times New Roman', serif;
+
+    /* Sizing */
+    --content-width: 720px;
+    --spacing-unit: 1rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 3rem;
+    --spacing-xl: 5rem;
+
+    /* Font Sizes */
+    --text-xs: 0.85rem;
+    --text-sm: 1rem;
+    --text-md: 1.0625rem;
+    --text-lg: 1.65rem;
+    --text-xl: clamp(1.65rem, 3vw, 2.15rem);
+    --text-2xl: clamp(2rem, 4vw, 2.5rem);
+    --text-3xl: clamp(2.5rem, 5.5vw, 3.25rem);
+
+    /* Line Heights */
+    --leading-tight: 1.2;
+    --leading-snug: 1.35;
+    --leading-normal: 1.7;
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-header-bg: #12282e;
+        --color-header-text: #e8e2d8;
+        --color-background: #151a1e;
+        --color-foreground: #dcd6cc;
+        --color-muted: #9a9288;
+        --color-primary: #6fb8c9;
+        --color-accent: #d9a76a;
+        --color-border: rgba(255, 255, 255, 0.08);
+    }
+}
+
+/* ========================================
+   Base Styles
+   ======================================== */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-body);
+    font-size: var(--text-md);
+    font-weight: 300;
+    line-height: var(--leading-normal);
+    color: var(--color-foreground);
+    background-color: var(--color-background);
+    margin: 0;
+    padding: 0;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Content Container */
+main,
+.post-content,
+article {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: var(--spacing-lg) var(--spacing-md);
+}
+
+/* ========================================
+   Header / Navigation
+   ======================================== */
+nav {
+    background-color: var(--color-header-bg);
+    color: var(--color-header-text);
+    padding: var(--spacing-md) var(--spacing-lg);
+    min-height: 180px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative;
+}
+
+/* Decorative vintage airplane */
+nav::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 20px;
+    transform: translateX(-50%);
+    width: clamp(320px, 70vw, 700px);
+    height: clamp(90px, 14vw, 160px);
+    background-image: url('https://bear-images.sfo2.cdn.digitaloceanspaces.com/idipankan-travel/header-travel-propeller.webp');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    pointer-events: none;
+}
+
+header {
+    background-color: var(--color-header-bg);
+    color: var(--color-header-text);
+    padding: var(--spacing-md) var(--spacing-lg);
+}
+
+/* Navigation Links */
+nav a:not(.title):not(.title a) {
+    color: var(--color-header-text);
+    text-decoration: none;
+    margin-left: var(--spacing-md);
+    font-size: var(--text-xs);
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    opacity: 0.85;
+    transition: opacity 0.2s ease;
+}
+
+nav a:hover,
+header a:hover {
+    opacity: 1;
+    text-decoration: none;
+    border: none;
+    background: transparent;
+}
+
+/* Site Title */
+.title,
+nav .title,
+nav h1,
+header .title,
+header h1 {
+    font-family: var(--font-heading);
+    font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--color-header-text);
+    margin: 0;
+    display: inline-block;
+    letter-spacing: 0.02em;
+}
+
+.title a,
+nav .title a,
+nav h1 a,
+header h1 a {
+    color: var(--color-header-text) !important;
+    border: none;
+    text-decoration: none;
+    margin: 0;
+}
+
+/* Nav Links Container */
+nav>*:not(.title) {
+    display: inline;
+}
+
+/* ========================================
+   Typography — Headings
+   ======================================== */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-heading);
+    font-weight: 400;
+    line-height: var(--leading-tight);
+    color: var(--color-primary);
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-unit);
+}
+
+h1 {
+    font-size: var(--text-3xl);
+    margin-top: var(--spacing-md);
+}
+
+h2 {
+    font-size: var(--text-2xl);
+    line-height: var(--leading-snug);
+}
+
+h3 {
+    font-size: var(--text-xl);
+}
+
+h4 {
+    font-size: var(--text-lg);
+}
+
+h5,
+h6 {
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-muted);
+}
+
+/* Post Title */
+main h1:first-of-type,
+article h1:first-of-type {
+    font-size: var(--text-3xl);
+    font-weight: 400;
+    margin-bottom: var(--spacing-sm);
+}
+
+/* ========================================
+   Links
+   ======================================== */
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+a:hover,
+a:focus {
+    border-bottom-color: var(--color-primary);
+}
+
+a:active {
+    opacity: 0.7;
+}
+
+/* Title Links */
+h1 a,
+h2 a,
+h3 a,
+.title a,
+a.title {
+    text-decoration: none;
+    border: none;
+}
+
+h1 a:hover,
+h2 a:hover,
+h3 a:hover {
+    border-bottom: 1px solid var(--color-primary);
+}
+
+/* ========================================
+   Paragraphs & Body Text
+   ======================================== */
+p {
+    margin: var(--spacing-unit) 0;
+}
+
+p:first-child {
+    margin-top: 0;
+}
+
+/* Description/Excerpt Text */
+.post-description,
+.post-excerpt,
+article p:first-of-type {
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+}
+
+.post-excerpt {
+    font-style: italic;
+    margin-top: var(--spacing-sm);
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+/* ========================================
+   Blog Post List
+   ======================================== */
+ul.blog-posts {
+    list-style: none;
+    padding: 0;
+    margin: var(--spacing-lg) 0;
+}
+
+ul.blog-posts li {
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--color-border);
+}
+
+ul.blog-posts li:last-child {
+    border-bottom: none;
+}
+
+/* Post Title in List */
+ul.blog-posts li a {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: var(--text-2xl);
+    font-weight: 400;
+    line-height: var(--leading-snug);
+    color: var(--color-primary);
+    text-decoration: none;
+    border: none;
+    margin-bottom: var(--spacing-sm);
+    transition: color 0.2s ease;
+}
+
+ul.blog-posts li a:hover {
+    color: var(--color-accent);
+}
+
+/* Date Styling */
+ul.blog-posts li span,
+.post-date,
+time {
+    display: block;
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: var(--color-accent);
+    margin-top: var(--spacing-sm);
+}
+
+/* Excerpt in Blog Listing */
+ul.blog-posts li .post-excerpt {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-style: normal;
+    color: var(--color-muted);
+    line-height: var(--leading-normal);
+    margin: var(--spacing-sm) 0 0 0;
+    padding: 0;
+    border: none;
+}
+
+/* ========================================
+   Images & Media
+   ======================================== */
+img,
+video,
+iframe {
+    max-width: 100%;
+    height: auto;
+    margin: var(--spacing-md) 0;
+    border-radius: 3px;
+}
+
+figure {
+    margin: var(--spacing-lg) 0;
+}
+
+figcaption {
+    font-size: var(--text-xs);
+    color: var(--color-muted);
+    text-align: center;
+    margin-top: var(--spacing-sm);
+    font-style: italic;
+}
+
+/* Figure aspect-ratio hints — add class to <figure> */
+figure.vertical img {
+    max-height: 520px;
+    max-width: 360px;
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
+    object-fit: contain;
+}
+
+figure.square img {
+    max-width: 480px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    object-position: center 25%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+figure.wide img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    object-position: center 25%;
+}
+
+/* ========================================
+   Blockquotes
+   ======================================== */
+blockquote {
+    font-family: var(--font-heading);
+    font-size: var(--text-lg);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--color-primary);
+    border-left: 3px solid var(--color-accent);
+    margin: var(--spacing-lg) 0;
+    padding: var(--spacing-unit) var(--spacing-md);
+    background: rgba(0, 0, 0, 0.015);
+    border-radius: 0 4px 4px 0;
+}
+
+@media (prefers-color-scheme: dark) {
+    blockquote {
+        background: rgba(255, 255, 255, 0.02);
+    }
+}
+
+blockquote p {
+    margin: 0;
+}
+
+/* ========================================
+   Code Blocks
+   ======================================== */
+code,
+pre {
+    font-family: 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
+    font-size: 0.875em;
+}
+
+code {
+    background-color: var(--color-border);
+    padding: 0.15em 0.4em;
+    border-radius: 3px;
+}
+
+pre {
+    background-color: rgba(0, 0, 0, 0.04);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    border-radius: 4px;
+    border: 1px solid var(--color-border);
+}
+
+pre code {
+    background: none;
+    padding: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+    pre {
+        background-color: rgba(255, 255, 255, 0.04);
+    }
+
+    iframe[src*="datawrapper"] {
+        background-color: #faf8f5;
+        border-radius: 6px;
+        box-shadow:
+            0 0 0 1px rgba(0, 0, 0, 0.05),
+            0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+}
+
+/* ========================================
+   Tables
+   ======================================== */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: var(--spacing-md) 0;
+    font-size: var(--text-sm);
+}
+
+th,
+td {
+    padding: var(--spacing-sm) var(--spacing-unit);
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+}
+
+th {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-muted);
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+@media (prefers-color-scheme: dark) {
+    th {
+        background-color: rgba(255, 255, 255, 0.02);
+    }
+}
+
+/* ========================================
+   Horizontal Rule
+   ======================================== */
+hr {
+    border: none;
+    border-top: 1px solid var(--color-border);
+    margin: var(--spacing-lg) auto;
+    max-width: 120px;
+}
+
+/* ========================================
+   Lists
+   ======================================== */
+ul,
+ol {
+    padding-left: var(--spacing-md);
+    margin: var(--spacing-unit) 0;
+}
+
+li {
+    margin-bottom: var(--spacing-sm);
+}
+
+/* ========================================
+   Pagination
+   ======================================== */
+.pagination,
+#pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin: var(--spacing-xl) 0;
+    padding: var(--spacing-md) 0;
+    border-top: 1px solid var(--color-border);
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.pagination a,
+#pagination a {
+    color: var(--color-primary);
+    text-decoration: none;
+    padding: var(--spacing-sm) var(--spacing-unit);
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    transition: all 0.2s ease;
+}
+
+.pagination a:hover,
+#pagination a:hover {
+    background-color: var(--color-primary);
+    color: var(--color-background);
+    border-color: var(--color-primary);
+}
+
+.pagination span,
+#pagination span {
+    color: var(--color-muted);
+    padding: 0 var(--spacing-sm);
+}
+
+/* ========================================
+   Author Bio Box
+   ======================================== */
+.author-box {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+    border: 1px solid var(--color-border);
+    padding: var(--spacing-md);
+    margin: var(--spacing-xl) 0;
+    max-width: 100%;
+    border-radius: 4px;
+}
+
+.author-box img {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    margin: 0;
+}
+
+.author-box-content {
+    flex: 1;
+    text-align: left;
+}
+
+.author-box h4,
+.author-box .author-name {
+    font-family: var(--font-heading);
+    font-size: var(--text-md);
+    font-weight: 500;
+    font-style: normal;
+    color: var(--color-foreground);
+    margin: 0 0 var(--spacing-sm);
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+.author-box p,
+.author-box .author-bio {
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    font-style: italic;
+    color: var(--color-muted);
+    line-height: var(--leading-normal);
+    margin: 0;
+}
+
+/* Mobile: Stack vertically */
+@media (max-width: 480px) {
+    .author-box {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .author-box-content {
+        text-align: center;
+    }
+}
+
+/* ========================================
+   Footer
+   ======================================== */
+footer {
+    text-align: center;
+    padding: var(--spacing-lg);
+    font-size: var(--text-xs);
+    color: var(--color-muted);
+    margin-top: var(--spacing-xl);
+    letter-spacing: 0.03em;
+}
+
+footer a {
+    color: var(--color-muted);
+}
+
+/* ========================================
+   Photo Grid
+   ======================================== */
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 6px;
+    margin: var(--spacing-md) 0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.photo-grid img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    object-position: center 25%;
+    margin: 0;
+    border-radius: 0;
+    display: block;
+    transition: opacity 0.2s ease;
+}
+
+.photo-grid img:hover {
+    opacity: 0.9;
+}
+
+/* When grid has exactly 2 images — equal halves */
+.photo-grid.cols-2 {
+    grid-template-columns: 1fr 1fr;
+}
+
+/* When grid has exactly 3 images — equal thirds */
+.photo-grid.cols-3 {
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+/* Figure inside grid */
+.photo-grid figure {
+    margin: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.photo-grid figure img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    object-position: center 25%;
+    margin: 0;
+    border-radius: 0;
+    display: block;
+}
+
+/* Focus-point overrides — add to individual <img> or <figure> */
+.photo-grid .focus-top {
+    object-position: center top;
+}
+
+.photo-grid .focus-center {
+    object-position: center center;
+}
+
+.photo-grid .focus-bottom {
+    object-position: center bottom;
+}
+
+/* Aspect-ratio hints inside grids */
+.photo-grid figure.vertical,
+.photo-grid img.vertical {
+    grid-row: span 2;
+}
+
+.photo-grid figure.vertical img,
+.photo-grid img.vertical {
+    height: 100%;
+    object-position: center top;
+}
+
+.photo-grid figure.wide,
+.photo-grid img.wide {
+    grid-column: span 2;
+}
+
+.photo-grid figure.wide img,
+.photo-grid img.wide {
+    height: 220px;
+    object-position: center center;
+}
+
+.photo-grid figure.square img,
+.photo-grid img.square {
+    aspect-ratio: 1 / 1;
+    height: auto;
+    object-position: center 25%;
+}
+
+.photo-grid figcaption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 6px 10px;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.55));
+    color: #fff;
+    font-size: 0.75rem;
+    font-style: normal;
+    margin: 0;
+    text-align: left;
+}
+
+/* ========================================
+   Photo Carousel
+   ======================================== */
+.photo-carousel {
+    position: relative;
+    margin: var(--spacing-md) 0;
+    overflow: hidden;
+    border-radius: 4px;
+    background: var(--color-background);
+    touch-action: pan-y;
+}
+
+.photo-carousel .carousel-track {
+    display: flex;
+    width: 100%;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform;
+}
+
+.photo-carousel .carousel-slide {
+    flex: 0 0 100%;
+    width: 100%;
+    position: relative;
+}
+
+.photo-carousel .carousel-slide img {
+    width: 100%;
+    height: auto;
+    max-height: 500px;
+    object-fit: contain;
+    display: block;
+    margin: 0;
+    border-radius: 0;
+}
+
+.photo-carousel .carousel-slide figcaption,
+.photo-carousel .carousel-slide .slide-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px 16px;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
+    color: #f0ebe3;
+    font-size: var(--text-xs);
+    font-style: normal;
+    text-align: center;
+    margin: 0;
+}
+
+/* Carousel arrows */
+.carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    color: #fff;
+    font-size: 1.25rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+    z-index: 2;
+    line-height: 1;
+    padding: 0;
+}
+
+.carousel-arrow:hover {
+    background: rgba(0, 0, 0, 0.55);
+}
+
+.carousel-arrow.prev {
+    left: 10px;
+}
+
+.carousel-arrow.next {
+    right: 10px;
+}
+
+/* Carousel dots */
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    padding: 5px 10px;
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-radius: 12px;
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+}
+
+.carousel-dots .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.45);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.carousel-dots .dot.active {
+    background: #fff;
+    transform: scale(1.3);
+}
+
+/* ========================================
+   Responsive Design
+   ======================================== */
+@media (max-width: 768px) {
+    :root {
+        --spacing-lg: 2rem;
+        --spacing-xl: 3rem;
+    }
+
+    nav,
+    header {
+        padding: var(--spacing-unit) var(--spacing-md);
+        min-height: 120px;
+    }
+
+    main,
+    .post-content,
+    article {
+        padding: var(--spacing-md) var(--spacing-unit);
+    }
+
+    .photo-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .photo-grid.cols-3 {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .photo-grid img,
+    .photo-grid figure img {
+        height: 160px;
+    }
+
+    .photo-carousel .carousel-slide img {
+        max-height: 360px;
+    }
+
+    .carousel-arrow {
+        width: 34px;
+        height: 34px;
+        font-size: 1rem;
+    }
+}
+
+@media (min-width: 1200px) {
+    body {
+        font-size: var(--text-md);
+    }
+}
+
+/* ========================================
+   Print Styles
+   ======================================== */
+@media print {
+
+    nav,
+    header,
+    footer {
+        display: none;
+    }
+
+    body {
+        background: white;
+        color: black;
+        font-size: 11pt;
+    }
+
+    a {
+        color: black;
+        text-decoration: underline;
+        border: none;
+    }
+
+    h1,
+    h2,
+    h3 {
+        page-break-after: avoid;
+    }
+}

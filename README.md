@@ -17,6 +17,10 @@ Each theme is a self-contained folder with a stylesheet, a developer reference d
 
 Each folder contains a `css-reference-*.md` file documenting that theme's CSS variables, sections, and customization tips.
 
+For gallery-only instructions and copyable photo layouts, use the
+[Travel gallery guide](travel-theme/gallery-guide.md) or the
+[Twenty Twenty-Two gallery guide](twentytwentytwo/gallery-guide.md).
+
 ## Installing a theme on Bear Blog
 
 1. Open the theme's `.css` file in this repo and copy its full contents.

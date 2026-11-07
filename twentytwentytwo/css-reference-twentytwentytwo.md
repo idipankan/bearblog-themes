@@ -179,6 +179,8 @@ At widths up to 768px, grids use two columns and normal grid images are 160px ta
 
 The script adds wrapping previous/next buttons, slide dots, touch swipes, and resize handling. Buttons work with keyboard Tab and Enter/Space. Multiple carousels operate independently. The track wrapper is optional; the script creates it for direct `.carousel-slide` children. A single slide needs no controls.
 
+Slide dots match Travel's compact styling: 6px circles with the active dot scaled to 1.3 times its size.
+
 To combine layouts, use `<div class="carousel-slide">` containing a photo grid or consecutive figures. Do not nest carousels. Ordinary carousel images fit without cropping, at most 500px tall on desktop and 360px on mobile. Captions stay above the dots. Reduced-motion preferences disable the sliding transition.
 
 Figures and grids work without JavaScript. With an explicit `.carousel-track`, carousels also support native horizontal scrolling without JavaScript.

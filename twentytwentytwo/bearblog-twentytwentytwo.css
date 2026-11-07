@@ -392,6 +392,312 @@ figcaption {
 }
 
 /* ========================================
+   Photo Figures, Grids & Carousels
+   ======================================== */
+figure.vertical img {
+    display: block;
+    max-height: 520px;
+    max-width: min(360px, 100%);
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
+    object-fit: contain;
+}
+
+figure.square img {
+    display: block;
+    width: 100%;
+    max-width: 480px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    object-position: center 25%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+figure.wide img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    object-position: center 25%;
+}
+
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr));
+    gap: 6px;
+    margin: var(--spacing-md) 0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.photo-grid.cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.photo-grid.cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.photo-grid > img,
+.photo-grid > figure img {
+    width: 100%;
+    max-width: 100%;
+    height: 220px;
+    max-height: none;
+    object-fit: cover;
+    object-position: center 25%;
+    margin: 0;
+    border-radius: 0;
+    display: block;
+    transition: opacity 0.2s ease;
+}
+
+.photo-grid img:hover {
+    opacity: 0.9;
+}
+
+.photo-grid > figure {
+    margin: 0;
+    min-width: 0;
+    min-height: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.photo-grid > figure.vertical,
+.photo-grid > img.vertical {
+    grid-row: span 2;
+    min-height: 446px;
+}
+
+.photo-grid > figure.vertical img,
+.photo-grid > img.vertical {
+    height: 100%;
+    object-position: center top;
+}
+
+/* Keep portrait content from expanding the two rows it spans. */
+.photo-grid > figure.vertical img {
+    position: absolute;
+    inset: 0;
+}
+
+.photo-grid > figure.wide,
+.photo-grid > img.wide {
+    grid-column: span 2;
+}
+
+.photo-grid > figure.wide img,
+.photo-grid > img.wide {
+    object-position: center center;
+}
+
+.photo-grid > figure.square img,
+.photo-grid > img.square {
+    aspect-ratio: 1 / 1;
+    height: auto;
+}
+
+.photo-grid > figure.focus-top img,
+.photo-grid img.focus-top {
+    object-position: center top;
+}
+
+.photo-grid > figure.focus-center img,
+.photo-grid img.focus-center {
+    object-position: center center;
+}
+
+.photo-grid > figure.focus-bottom img,
+.photo-grid img.focus-bottom {
+    object-position: center bottom;
+}
+
+.photo-grid figcaption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 6px 10px;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.55));
+    color: #fff;
+    font-size: 0.75rem;
+    font-style: normal;
+    margin: 0;
+    text-align: left;
+}
+
+.photo-carousel {
+    position: relative;
+    margin: var(--spacing-md) 0;
+    overflow: hidden;
+    border-radius: 4px;
+    background: var(--color-background);
+    touch-action: pan-y;
+}
+
+.photo-carousel > .carousel-track {
+    display: flex;
+    width: 100%;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform;
+}
+
+.photo-carousel:not(.is-enhanced) > .carousel-track {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+}
+
+.photo-carousel .carousel-slide {
+    flex: 0 0 100%;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    position: relative;
+    scroll-snap-align: start;
+}
+
+.photo-carousel .carousel-slide > img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    max-height: 500px;
+    object-fit: contain;
+    display: block;
+    margin: 0;
+    border-radius: 0;
+}
+
+.photo-carousel .carousel-slide > figcaption,
+.photo-carousel .carousel-slide > .slide-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px 16px;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
+    color: var(--color-header-text);
+    font-size: var(--text-xs);
+    font-style: normal;
+    text-align: center;
+    margin: 0;
+}
+
+/* Reserve separate space for dots so they do not cover captions. */
+.photo-carousel.is-enhanced {
+    padding-bottom: 40px;
+}
+
+.photo-carousel .carousel-arrow {
+    position: absolute;
+    top: calc(50% - 20px);
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    color: #fff;
+    font-size: 1.25rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+    z-index: 2;
+    line-height: 1;
+    padding: 0;
+}
+
+.photo-carousel .carousel-arrow:hover {
+    background: rgba(0, 0, 0, 0.55);
+}
+
+.photo-carousel .carousel-arrow.prev {
+    left: 10px;
+}
+
+.photo-carousel .carousel-arrow.next {
+    right: 10px;
+}
+
+.photo-carousel .carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    padding: 5px 10px;
+    background: rgba(0, 0, 0, 0.35);
+    border-radius: 12px;
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+}
+
+.photo-carousel .carousel-dots .dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.45);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.photo-carousel .carousel-dots .dot.active {
+    background: #fff;
+    transform: scale(1.15);
+}
+
+@media (max-width: 768px) {
+    .photo-grid,
+    .photo-grid.cols-3 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .photo-grid > img,
+    .photo-grid > figure img {
+        height: 160px;
+    }
+
+    .photo-grid > figure.vertical img,
+    .photo-grid > img.vertical {
+        height: 100%;
+    }
+
+    .photo-grid > figure.vertical,
+    .photo-grid > img.vertical {
+        min-height: 326px;
+    }
+
+    .photo-grid > figure.square img,
+    .photo-grid > img.square {
+        height: auto;
+    }
+
+    .photo-carousel .carousel-slide > img {
+        max-height: 360px;
+    }
+
+    .photo-carousel .carousel-arrow {
+        width: 34px;
+        height: 34px;
+        font-size: 1rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .photo-carousel > .carousel-track {
+        transition: none;
+    }
+}
+
+/* ========================================
    Blockquotes
    ======================================== */
 blockquote {

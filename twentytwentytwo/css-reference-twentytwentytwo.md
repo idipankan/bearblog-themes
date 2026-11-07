@@ -1,6 +1,9 @@
-# Bearblog Twenty-Twenty-Two CSS Reference
+---
+title: Bearblog Twenty-Twenty-Two CSS Reference
+description: Theme styling reference and photo gallery installation guide
+---
 
-> Quick developer guide for styling fixes. [View source](file:///c:/Users/hp/Desktop/Code%20Playground/2026/Jan/bear-css/bearblog-twentytwentytwo.css)
+> Quick developer guide for styling fixes. [View source](./bearblog-twentytwentytwo.css)
 
 ---
 
@@ -98,19 +101,97 @@ margin-bottom: var(--spacing-xl);
 
 ---
 
-### Images & Media (Lines 366-387)
+### Images & Media
 - Max-width 100%, auto height
 - `figure` with centered `figcaption`
 
+#### Installing photo capabilities
+
+1. Replace your custom CSS with [bearblog-twentytwentytwo.css](./bearblog-twentytwentytwo.css).
+2. Copy [twentytwentytwo-gallery.js](./twentytwentytwo-gallery.js) into its own `<script>...</script>` block in Bear Blog's **Footer Directives**. Keep other plugins and their script blocks intact.
+3. Paste the body of [photo-samples.md](./photo-samples.md) into a draft post. Omit the YAML metadata between the opening `---` delimiters.
+
+Use this wrapper in Footer Directives, replacing the comment with the full JavaScript file contents:
+
+```html
+<script>
+/* Paste the full contents of twentytwentytwo-gallery.js here. */
+</script>
+```
+
+Add the gallery script only once. The `.js` file itself remains plain JavaScript; the script tags belong in Footer Directives.
+
+The markup uses the same classes as Travel. Colors and typography still come from Twenty Twenty-Two. Ordinary images, unclassified figures, videos, iframes, and non-photo theme styles are unchanged.
+
+#### Standalone figures and vertical stacks
+
+Use `<figure>` and `<figcaption>` for captioned images. Consecutive figures form a vertical stack.
+
+| Figure class | Display                                        |
+|--------------|------------------------------------------------|
+| None         | Existing natural-size image and centered caption |
+| `vertical`   | Centered portrait, at most 360px wide and 520px tall |
+| `square`     | Centered 1:1 crop, at most 480px wide            |
+| `wide`       | Full-width image, at most 400px tall            |
+
+```html
+<figure class="vertical">
+<img src="https://picsum.photos/id/1011/600/900" alt="A traveler on the water">
+<figcaption>A portrait-oriented photograph</figcaption>
+</figure>
+```
+
+#### Horizontal stacks and mixed grids
+
+Use `<div class="photo-grid">` with direct `<img>` or `<figure>` children. `cols-2` and `cols-3` select two or three equal columns. Without a hint, CSS auto-fills columns; JavaScript adds a hint for exactly two or three children, but never overrides an explicit hint.
+
+Add these classes to a grid image or its figure:
+
+| Class          | Display                                  |
+|----------------|------------------------------------------|
+| `vertical`     | Spans two rows, cropped from the top     |
+| `wide`         | Spans two columns, cropped at the center  |
+| `square`       | 1:1 crop                                 |
+| `focus-top`    | Crop from the top                        |
+| `focus-center` | Crop from the center                     |
+| `focus-bottom` | Crop from the bottom                     |
+
+Figures display captions as bottom overlays. Explicit focus classes override the aspect class's crop position. A portrait plus two normal images in `cols-2` creates a portrait beside a vertical stack; a `wide` figure above two normal figures creates a horizontal stack below a wide image.
+
+At widths up to 768px, grids use two columns and normal grid images are 160px tall instead of 220px. Portrait spans and square crops remain active.
+
+#### Carousels and combinations
+
+```html
+<div class="photo-carousel" role="region" aria-label="Trip photographs">
+<div class="carousel-track">
+<figure class="carousel-slide">
+<img src="https://picsum.photos/id/1015/1200/800" alt="A mountain valley">
+<figcaption>A mountain valley</figcaption>
+</figure>
+<figure class="carousel-slide">
+<img src="https://picsum.photos/id/1016/1200/800" alt="A rocky landscape">
+<figcaption>A rocky landscape</figcaption>
+</figure>
+</div>
+</div>
+```
+
+The script adds wrapping previous/next buttons, slide dots, touch swipes, and resize handling. Buttons work with keyboard Tab and Enter/Space. Multiple carousels operate independently. The track wrapper is optional; the script creates it for direct `.carousel-slide` children. A single slide needs no controls.
+
+To combine layouts, use `<div class="carousel-slide">` containing a photo grid or consecutive figures. Do not nest carousels. Ordinary carousel images fit without cropping, at most 500px tall on desktop and 360px on mobile. Captions stay above the dots. Reduced-motion preferences disable the sliding transition.
+
+Figures and grids work without JavaScript. With an explicit `.carousel-track`, carousels also support native horizontal scrolling without JavaScript.
+
 ---
 
-### Blockquotes (Lines 389-405)
+### Blockquotes
 - Left border accent
 - Heading font, italic, larger text
 
 ---
 
-### Code Blocks (Lines 407-438)
+### Code Blocks
 | Element | Background |
 |---------|------------|
 | `code` (inline) | `var(--color-border)` |
@@ -120,20 +201,20 @@ margin-bottom: var(--spacing-xl);
 
 ---
 
-### Tables (Lines 440-466)
+### Tables
 - Full width, collapsed borders
 - Header row with subtle background
 
 ---
 
-### Pagination (Lines 490-526)
+### Pagination
 Selectors: `.pagination`, `#pagination`
 - Centered flex layout
 - Bordered link buttons
 
 ---
 
-### Author Box (Lines 528-588)
+### Author Box
 Selector: `.author-box`
 
 | Element | Class | Notes |
@@ -148,7 +229,7 @@ Selector: `.author-box`
 
 ---
 
-### Footer (Lines 590-603)
+### Footer
 - Centered, small text
 - Muted color
 
@@ -164,7 +245,7 @@ Selector: `.author-box`
 
 ---
 
-## 🖨 Print Styles (Lines 635-659)
+## 🖨 Print Styles
 - Hides nav, header, footer
 - Black text on white
 - Headings avoid page breaks
